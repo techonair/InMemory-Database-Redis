@@ -9,7 +9,9 @@ class InitializeServer:
             if not data:
                 break
 
-            print(f"Received Data: {data}")
+            command = data.decode('utf-8').strip()
+            response = redis_server.process_command(command)
+            client_socket.send(response.encode('utf-8'))
 
         client_socket.close()
 
